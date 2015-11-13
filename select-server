@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#IPアドレス用の変数
+IPADDR=NULL
+
+#ホスト名からIPアドレスを決定
+function ipdeterm()
+{
+  case "$1" in
+    "aaa" ) IPADDR=192.168.0.10 ;;
+    "bbb" ) IPADDR=192.168.0.11 ;;
+    "ccc" ) IPADDR=192.168.0.12 ;;
+    "ccc" ) IPADDR=192.168.0.13 ;;
+  esac
+}
+
+#ssh接続用のexpect
+function connect()
+{
+  expect -c "
+    set timeout 5
+    spawn ssh root@$IPADDR
+    expect \"root@$IPADDR's password:\"
+    send \"PASSWORD\n\"
+    interact
+  "
+}
+
+#メイン
+echo "接続するAPサーバを選んでください"
+select dest in aaa bbb ccc ddd
+do
+  ipdeterm $dest
+  connect
+  break;
+done
