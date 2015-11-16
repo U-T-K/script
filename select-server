@@ -27,7 +27,7 @@ function connect()
 }
 
 #メイン
-echo "接続するAPサーバを選んでください"
+echo "接続するサーバを選んでください"
 select dest in aaa bbb ccc ddd
 do
   ipdeterm $dest
